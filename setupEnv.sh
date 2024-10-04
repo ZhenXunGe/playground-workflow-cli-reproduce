@@ -4,14 +4,16 @@ git submodule update --recursive
 
 cd zkWasm
 # Checkout branch/tag/commitHash here for the version
-git checkout 3fac796e9d8c01556bbf473418b16e5181ff2c04
+# This is for current playground main branch version which is explorer-integration-2.0 branch, hash: 99e781280716837836177efddbf07306e1d41592
+git checkout 99e781280716837836177efddbf07306e1d41592
 git submodule init
 git submodule update --recursive
 cargo build --release --features continuation,perf,profile
 cd -
 
 cd continuation-batcher
-git checkout c058e85cd401981f6ddf94d7378281b0ba7a2327
+# This is for batcher tag="on-prove-pairing-2.0"
+git checkout tags/on-prove-pairing-2.0
 cargo build --features perf --release
 cd -
 

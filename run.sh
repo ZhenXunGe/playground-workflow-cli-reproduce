@@ -10,11 +10,12 @@ ZKWASM_CLI=./zkWasm/target/release/zkwasm-cli
 set -e
 set -x
 
+rm -rf $PARAMSDIR/*.data $PARAMSDIR/*.config $OUTPUTDIR
+
 test_continuation_cli() {
-    rm -rf $PARAMSDIR/*.data $PARAMSDIR/*.config $OUTPUTDIR
     $ZKWASM_CLI --params $PARAMSDIR image setup --host standard
-    $ZKWASM_CLI --params $PARAMSDIR image dry-run --wasm $IMAGEDIR/image.wasm --public 25:i64 --public 24:i64 --output ./output
-    CUDA_VISIBLE_DEVICES=0 $ZKWASM_CLI --params $PARAMSDIR image prove --public 25:i64 --public 24:i64 --padding 3 --wasm $IMAGEDIR/image.wasm --output $OUTPUTDIR
+    $ZKWASM_CLI --params $PARAMSDIR image dry-run --wasm $IMAGEDIR/image.wasm --public 4164164773963033102:i64,10324589875679153781:i64,14862395446985487215:i64,5454683332844662963:i64 --private 123:i64,0:i64,0:i64,2:i64,0:i64,1:i64 --output ./output
+    CUDA_VISIBLE_DEVICES=0 $ZKWASM_CLI --params $PARAMSDIR image prove --public 4164164773963033102:i64,10324589875679153781:i64,14862395446985487215:i64,5454683332844662963:i64 --private 123:i64,0:i64,0:i64,2:i64,0:i64,1:i64 --padding 3 --wasm $IMAGEDIR/image.wasm --output $OUTPUTDIR
     $ZKWASM_CLI --params $PARAMSDIR image verify --output $OUTPUTDIR
 }
 
