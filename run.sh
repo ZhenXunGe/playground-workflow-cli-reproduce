@@ -7,15 +7,27 @@ OUTPUTDIR="./output"
 # use zkwasm cli to generate proof
 ZKWASM_CLI=./zkWasm/target/release/zkwasm-cli
 
+PUBLIC="14789582351289948625:i64,10919489180071018470:i64,10309858136294505219:i64,2839580074036780766:i64"
+PRIVATE="data/private.txt"
+CONTEXT="data/context.txt"
+
 set -e
 set -x
 
 test_continuation_cli() {
-    rm -rf $PARAMSDIR/*.data $PARAMSDIR/*.config $OUTPUTDIR
-    $ZKWASM_CLI --params $PARAMSDIR image setup --host standard
-    $ZKWASM_CLI --params $PARAMSDIR image dry-run --wasm $IMAGEDIR/image.wasm --public 25:i64 --public 24:i64 --output ./output
-    CUDA_VISIBLE_DEVICES=0 $ZKWASM_CLI --params $PARAMSDIR image prove --public 25:i64 --public 24:i64 --padding 3 --wasm $IMAGEDIR/image.wasm --output $OUTPUTDIR
-    $ZKWASM_CLI --params $PARAMSDIR image verify --output $OUTPUTDIR
+    rm -rf $PARAMSDIR/*.data $PARAMSDIR/*.config $OUTPUTDIR;
+    time $ZKWASM_CLI --params $PARAMSDIR image setup --host standard;
+    time $ZKWASM_CLI --params $PARAMSDIR image dry-run --wasm $IMAGEDIR/image.wasm \
+        --public $PUBLIC \
+        --private_file $PRIVATE \
+        --ctxin_file $CONTEXT \
+        --output $OUTPUTDIR;
+    time CUDA_VISIBLE_DEVICES=0 $ZKWASM_CLI --params $PARAMSDIR image prove \
+        --public $PUBLIC \
+        --private_file $PRIVATE \
+        --ctxin_file $CONTEXT \
+        --padding 3 --wasm $IMAGEDIR/image.wasm --output $OUTPUTDIR;
+    time $ZKWASM_CLI --params $PARAMSDIR image verify --output $OUTPUTDIR;
 }
 
 
