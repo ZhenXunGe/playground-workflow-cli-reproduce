@@ -11,13 +11,13 @@ For each issue it should be a seperate branch with different version of zkwasm/b
 5. `bash run.sh`
 
 ## Usage for ZKWAS-404 ("Dry run takes long time" issue)
-Image and inputs included in this branch, so you only need to run the following commands:
+Image and inputs included in this branch, so you only need to run the following commands from the `playground-workflow-cli-reproduce` directory.
 
-1. Start mongo db process on the default port (leave this running on its own terminal):
+1. In a different terminal, from the `playground-workflow-cli-reproduce` directory, start the mongo db process on the default port (leave this running on its own terminal):
     ```
     mongod --dbpath db
     ```
-2. In a different terminal restore mongo data. Extract mongo `zkwasm-mongo-merkle.tar.gz` and run restore command:
+2. Return to your main terminal and restore the mongo db data by extracting mongo `zkwasm-mongo-merkle.tar.gz` and running the restore command:
     ```
     cd data
     tar xvf zkwasm-mongo-merkle.tar.gz
@@ -28,7 +28,7 @@ Image and inputs included in this branch, so you only need to run the following 
     ```
     bash setupEnv.sh
     ```
-3. Copy zkwasm patch (this is for passing inputs via a file - note that this is specifically for zkwasm commit `3fac796e9d8c01556bbf473418b16e5181ff2c04`):
+3. Copy zkwasm patch (this is for passing inputs via text file - note that this is specifically for zkwasm commit `3fac796e9d8c01556bbf473418b16e5181ff2c04`):
     - copy file:
         ```
         cp ./data/app_builder.rs zkWasm/crates/cli/src/app_builder.rs
@@ -41,5 +41,5 @@ Image and inputs included in this branch, so you only need to run the following 
         ```
 4. Run:
     ```
-    bash run.sh
+    bash run.sh | tee stdout.txt
     ```
