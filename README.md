@@ -13,8 +13,9 @@ For each issue it should be a seperate branch with different version of zkwasm/b
 ## Usage for ZKWAS-404 ("Dry run takes long time" issue)
 Image and inputs included in this branch, so you only need to run the following commands from the `playground-workflow-cli-reproduce` directory.
 
-1. In a different terminal, from the `playground-workflow-cli-reproduce` directory, start the mongo db process on the default port (leave this running on its own terminal):
+1. In a different terminal, from the `playground-workflow-cli-reproduce` directory, start the mongo db process on the default port (leave this running on its own terminal - note that we increase the ulimit because the dryrun sends many requests to the db which causes many files to be open at once):
     ```
+    ulimit -n 64000
     mongod --dbpath db
     ```
 2. Return to your main terminal and restore the mongo db data by extracting mongo `zkwasm-mongo-merkle.tar.gz` and running the restore command:
