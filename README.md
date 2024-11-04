@@ -15,6 +15,7 @@ Image and inputs included in this branch, so you only need to run the following 
 
 1. In a different terminal, from the `playground-workflow-cli-reproduce` directory, start the mongo db process on the default port (leave this running on its own terminal - note that we increase the ulimit because the dryrun sends many requests to the db which causes many files to be open at once):
     ```
+    mkdir -p db
     ulimit -n 64000
     mongod --dbpath db
     ```
