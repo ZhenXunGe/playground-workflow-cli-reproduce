@@ -39,7 +39,7 @@ Image and inputs included in this branch, so you only need to run the following 
         cargo build --release --features continuation,perf,profile
         cd -
         ```
-4. Run:
+4. Run (note: this runs setup, dryrun, prove, verify and continuation-batcher, so if you're only interested in dryrun you should comment out the extra commands):
     ```
     bash run.sh | tee stdout.txt
     ```
