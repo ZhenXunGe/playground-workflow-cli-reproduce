@@ -4,14 +4,14 @@ git submodule update --recursive
 
 cd zkWasm
 # Checkout branch/tag/commitHash here for the version
-git checkout 3fac796e9d8c01556bbf473418b16e5181ff2c04
+git checkout 35650d5e0eabb8ccba1908a27fcd27e0c0c0115a
 git submodule init
 git submodule update --recursive
 cargo build --release --features continuation,perf,profile
 cd -
 
 cd continuation-batcher
-git checkout c058e85cd401981f6ddf94d7378281b0ba7a2327
+git checkout 904a0c1b03027b6cf256d9ccd44d8eb5abbac69a
 cargo build --features perf --release
 cd -
 
