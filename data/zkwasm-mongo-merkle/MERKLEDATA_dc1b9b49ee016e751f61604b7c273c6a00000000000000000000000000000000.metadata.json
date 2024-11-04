@@ -1,1 +1,0 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"hash":{"$numberInt":"-1"}},"name":"hash_-1"}],"uuid":"5621a0c8e7a74754915da8c80b2309aa","collectionName":"MERKLEDATA_dc1b9b49ee016e751f61604b7c273c6a00000000000000000000000000000000","type":"collection"}
