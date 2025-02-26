@@ -3,6 +3,7 @@ git submodule init
 git submodule update --recursive
 
 cd zkWasm
+git fetch
 # Checkout branch/tag/commitHash here for the version
 git checkout 35650d5e0eabb8ccba1908a27fcd27e0c0c0115a
 git submodule init
@@ -11,7 +12,8 @@ cargo build --release --features continuation,perf,profile
 cd -
 
 cd continuation-batcher
-git checkout 904a0c1b03027b6cf256d9ccd44d8eb5abbac69a
+git fetch
+git checkout tags/playground-enable-autosubmit-1.0 # Can either use tags/stable-shuffle-1.0, these 2 version in fact are using same dependency
 cargo build --features perf --release
 cd -
 
