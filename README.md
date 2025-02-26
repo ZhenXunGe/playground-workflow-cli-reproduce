@@ -11,7 +11,8 @@ For each issue it should be a seperate branch with different version of zkwasm/b
 This is when we test image with context.
 The image.wasm is generated from images/context.rs
 
-It looks like the wasm_write_context() will trigger the error
+It looks like the wasm_write_context() will trigger the error.
+(Confirmed with Xin it is known issue and not fixed yet)
 
 The run.sh will fail with info:
 `thread 'main' panicked at /home/yymone/.cargo/git/checkouts/halo2ecc-s-703ac241a66bc1e8/164b836/src/circuit/base_chip.rs:488:9:
