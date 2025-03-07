@@ -11,6 +11,7 @@ use clap::Command;
 use clap::ValueHint;
 
 use crate::args::HostMode;
+use crate::args::Scheme;
 use crate::command::DryRunArg;
 use crate::command::ProveArg;
 use crate::command::RunningArg;
@@ -89,9 +90,9 @@ fn read_inputs_from_file(filename: String) -> Vec<String> {
     use std::io::BufRead;
     use std::io::BufReader;
     use std::path::Path;
-
+    
     let file = File::open(Path::new(&filename)).unwrap();
-    BufReader::new(file).lines().map(|l| l.unwrap()).collect()
+    BufReader::new(file).lines().map(|l| l.unwrap().trim().to_string()).collect()
 }
 
 struct PrivateInputsFilenameArg;
@@ -102,7 +103,26 @@ impl ArgBuilder<Vec<String>> for PrivateInputsFilenameArg {
     }
 
     fn parse(matches: &ArgMatches) -> Vec<String> {
-        let fname : String = matches.get_one("private_file").cloned().unwrap();
+        let fname : String = matches.get_one("private_file").cloned().unwrap_or_default();
+        if fname.is_empty() {
+            return Vec::new()
+        }
+        read_inputs_from_file(fname)
+    }
+}
+
+struct ContextInputsFilenameArg;
+impl ArgBuilder<Vec<String>> for ContextInputsFilenameArg {
+    fn builder() -> Arg<'static> {
+        arg!(--ctxin_file <CONTEXT_INPUT_FILENAME> ... "Filename containing context inputs")
+       .takes_value(true).required(false)
+    }
+
+    fn parse(matches: &ArgMatches) -> Vec<String> {
+        let fname : String = matches.get_one("private_file").cloned().unwrap_or_default();
+        if fname.is_empty() {
+            return Vec::new()
+        }
         read_inputs_from_file(fname)
     }
 }
@@ -120,19 +140,6 @@ impl ArgBuilder<Vec<String>> for ContextInputsArg {
             .unwrap_or_default()
             .map(|s| s.to_string())
             .collect()
-    }
-}
-
-struct ContextInputsFilenameArg;
-impl ArgBuilder<Vec<String>> for ContextInputsFilenameArg {
-    fn builder() -> Arg<'static> {
-        arg!(--ctxin_file <CONTEXT_INPUT_FILENAME> ... "Filename containing context inputs")
-       .takes_value(true).required(false)
-    }
-
-    fn parse(matches: &ArgMatches) -> Vec<String> {
-        let fname : String = matches.get_one("ctxin_file").cloned().unwrap();
-        read_inputs_from_file(fname)
     }
 }
 
@@ -233,6 +240,14 @@ fn setup_command() -> Command<'static> {
             ).takes_value(true)
             .value_delimiter(',')
             .required(false)
+        )
+        .arg(
+            arg!(
+                --scheme <SCHEME> "Specify polynomial commitment scheme"
+            )
+            .default_value("shplonk")
+            .value_parser(value_parser!(Scheme))
+            .required(false),
         );
 
     let command = if cfg!(not(feature = "uniform-circuit")) {
@@ -313,6 +328,7 @@ impl From<&ArgMatches> for SetupArg {
                 .map(|v| v.to_string())
                 .collect::<Vec<_>>(),
             wasm_image: WasmImageArg::parse(val),
+            scheme: *val.get_one::<Scheme>("scheme").unwrap(),
         }
     }
 }
