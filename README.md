@@ -28,7 +28,7 @@ Image and inputs included in this branch, so you only need to run the following 
     bash setupEnv.sh
     ```
     under repo root folder. 
-    It will do some further thing to copy our own zkwasm cli patch (this is for passing inputs via text file - note that this is specifically for zkwasm commit `3fac796e9d8c01556bbf473418b16e5181ff2c04`): This is because the private inputs are too big and cannot be specify in command inputs. Thus we change cli to read it from file.
+    It will do some further thing to copy our own zkwasm cli patch (this is for passing inputs via text file - note that this is specifically for zkwasm commit `branch=explorer-integration-3.0#35650d5e0eabb8ccba1908a27fcd27e0c0c0115a`): This is because the private inputs are too big and cannot be specify in command inputs. Thus we change cli to read it from file.
     - copy file:
         ```
         cp ./data/app_builder.rs zkWasm/crates/cli/src/app_builder.rs
