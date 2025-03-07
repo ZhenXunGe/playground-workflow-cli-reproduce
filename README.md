@@ -41,5 +41,5 @@ Image and inputs included in this branch, so you only need to run the following 
         ```
 4. Run (note: this runs setup, dryrun only, other later process had been comment out):
     ```
-    bash run.sh | tee stdout.txt
+    bash run.sh 2>&1 | tee stdout.txt
     ```

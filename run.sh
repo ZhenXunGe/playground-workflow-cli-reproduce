@@ -17,7 +17,7 @@ set -x
 
 test_continuation_cli() {
     rm -rf $PARAMSDIR/*.data $PARAMSDIR/*.config $OUTPUTDIR;
-    time $ZKWASM_CLI --params $PARAMSDIR image setup $SCHEME;
+    time $ZKWASM_CLI --params $PARAMSDIR image setup $SCHEME --host standard ;
     echo "Before dry run time: $(date +'%Y-%m-%d %H:%M:%S')"
     time $ZKWASM_CLI --params $PARAMSDIR image dry-run --wasm $IMAGEDIR/image.wasm \
         --public $PUBLIC \
