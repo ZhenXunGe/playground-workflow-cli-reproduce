@@ -13,7 +13,7 @@ set -x
 
 test_continuation_cli() {
     rm -rf $PARAMSDIR/*.data $PARAMSDIR/*.config $OUTPUTDIR
-    $ZKWASM_CLI --params $PARAMSDIR image setup $SCHEME
+    $ZKWASM_CLI --params $PARAMSDIR image setup $SCHEME --host standard;
     $ZKWASM_CLI --params $PARAMSDIR image dry-run --wasm $IMAGEDIR/image.wasm --public 25:i64 --public 24:i64 --output ./output
     CUDA_VISIBLE_DEVICES=0 $ZKWASM_CLI --params $PARAMSDIR image prove --public 25:i64 --public 24:i64 --padding 3 --wasm $IMAGEDIR/image.wasm --output $OUTPUTDIR
     $ZKWASM_CLI --params $PARAMSDIR image verify --output $OUTPUTDIR
