@@ -20,9 +20,18 @@ Image and inputs included in this branch, so you only need to run the following 
     ```
     cd data
     tar xvf zkwasm-mongo-merkle_slow_dryrun_C5199A.tar.gz
-    mongorestore --db zkwasm-mongo-merkle ./zkwasm-mongo-merkle
+    mongorestore --db zkwasm-mongo-merkle --collection="DATAHASH_0000000000000000000000000000000000000000000000000000000000000000" 
     cd -
     ```
+    Then run mongosh to go to mongo cli to rename the collections for cli:
+    ```
+     db.MERKLEDATA_c5199a94f124235b544df4d9809c839200000000000000000000000000000000.renameCollection("MERKLEDATA_0000000000000000000000000000000000000000000000000000000000000000")
+
+     db.DATAHASH_c5199a94f124235b544df4d9809c839200000000000000000000000000000000.renameCollection("DATAHASH_0000000000000000000000000000000000000000000000000000000000000000")
+
+     exit
+    ```
+    
 3. Run
     ```
     bash setupEnv.sh
