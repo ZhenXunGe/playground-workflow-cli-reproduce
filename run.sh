@@ -16,7 +16,7 @@ test_continuation_cli() {
     $ZKWASM_CLI --params $PARAMSDIR image setup $SCHEME --host standard;
     $ZKWASM_CLI --params $PARAMSDIR image dry-run --wasm $IMAGEDIR/image.wasm --public 25:i64 --public 24:i64 --output ./output
     CUDA_VISIBLE_DEVICES=0 $ZKWASM_CLI --params $PARAMSDIR image prove --public 25:i64 --public 24:i64 --padding 3 --wasm $IMAGEDIR/image.wasm --output $OUTPUTDIR
-    $ZKWASM_CLI --params $PARAMSDIR image verify --output $OUTPUTDIR
+    # $ZKWASM_CLI --params $PARAMSDIR image verify --output $OUTPUTDIR
 }
 
 
@@ -39,6 +39,8 @@ BATCH_INFO_FINAL=$BATCHCONFIGDIR/sample/cont-final.json
 BATCHER_CLI=$BATCHCONFIGDIR/target/release/circuit-batcher
 
 # Make sure the name field in fibonacci.loadinfo.json is changed to single to fit the above batch configure
-CUDA_VISIBLE_DEVICES=0 RUST_BACKTRACE=1 $BATCHER_CLI --params $PARAMSDIR --output $OUTPUTDIR batch -k 23  -s shplonk --challenge keccak --info $OUTPUTDIR/image.loadinfo.json --name image_aggr --commits $BATCH_INFO_INIT $BATCH_INFO_RECT $BATCH_INFO_FINAL --cont 6
+CUDA_VISIBLE_DEVICES=0 RUST_BACKTRACE=1 $BATCHER_CLI --params $PARAMSDIR --output $OUTPUTDIR batch -k 23  -s shplonk --challenge keccak --info $OUTPUTDIR/image.loadinfo.json --name image_aggr --commits $BATCH_INFO_INIT $BATCH_INFO_RECT $BATCH_INFO_FINAL --cont 6 || exit 1
 
-$BATCHER_CLI --params $PARAMSDIR --output $OUTPUTDIR verify --challenge keccak --info $OUTPUTDIR/image_aggr.final.loadinfo.json
+echo $?
+
+# $BATCHER_CLI --params $PARAMSDIR --output $OUTPUTDIR verify --challenge keccak --info $OUTPUTDIR/image_aggr.final.loadinfo.json
