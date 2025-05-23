@@ -9,3 +9,16 @@ For each issue it should be a seperate branch with different version of zkwasm/b
 3. put the issue image into images folder with name image.wasm
 4. adjust the cli command in "run.sh" for zkwasm and continuation-batcher command with your issue inputs. (like those --public, --private inputs, etc)
 5. `bash run.sh`
+
+## Zkwasm max instruction bug reproduce
+
+Run the following commands to reproduce the max instructions bug:
+```
+bash setupEnv.sh
+bash run.sh
+```
+
+The following error message should be displayed:
+```
+The number of instructions of the image(45977) is too large
+```
